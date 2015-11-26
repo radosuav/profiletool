@@ -309,8 +309,9 @@ class ProfilePlugin:
 	def addLayer(self, layer1 = None):
 		if layer1 is None:
 			layer1 = self.iface.activeLayer()
-		self.tableViewTool.addLayer(self.iface, self.mdl, layer1)
-		layer1.dataChanged.connect(self.refreshPlot)
+		if isProfilable(layer1):
+			self.tableViewTool.addLayer(self.iface, self.mdl, layer1)
+			layer1.dataChanged.connect(self.refreshPlot)
 
 	def _onClick(self,index1):					#action when clicking the tableview
 		self.tableViewTool.onClick(self.iface, self.wdg, self.mdl, self.plotlibrary, index1)
