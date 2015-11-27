@@ -132,7 +132,7 @@ class PlottingTool:
 	def attachCurves(self, wdg, profiles, model1, library):
 		if library == "Qwt5" and has_qwt:
 			for i in range(0 , model1.rowCount()):
-				tmp_name = ("%s#%d") % (profiles[i]["layer"].name(), profiles[i]["band"]+1)
+				tmp_name = ("%s#%d") % (profiles[i]["layer"].name(), profiles[i]["band"])
 
 				# As QwtPlotCurve doesn't support nodata, split the data into single lines
 				# with breaks wherever data is None.
@@ -169,7 +169,7 @@ class PlottingTool:
 		elif library == "Matplotlib" and has_mpl:
 			for i in range(0 , model1.rowCount()):
 
-				tmp_name = ("%s#%d") % (profiles[i]["layer"].name(), profiles[i]["band"]+1)
+				tmp_name = ("%s#%d") % (profiles[i]["layer"].name(), profiles[i]["band"])
 				if model1.item(i,0).data(Qt.CheckStateRole):
 					wdg.plotWdg.figure.get_axes()[0].plot(profiles[i]["l"], profiles[i]["z"], gid = tmp_name, linewidth = 3, visible = True)
 				else:
@@ -283,7 +283,7 @@ class PlottingTool:
 					else:
 						curve.setVisible(False)
 					wdg.plotWdg.replot()
-					break
+					#break  # Don't break as there may be multiple curves with a common name (segments separated with None values)
 		if library == "Matplotlib":
 			temp1 = wdg.plotWdg.figure.get_axes()[0].get_lines()
 			for i in range(len(temp1)):
